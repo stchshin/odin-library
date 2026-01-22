@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    body: 0;
+    background-color: #915a17;
+    position: relative;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 5vw 90vw 5vw;
+    background-color: #c4a989;
+}
+
+.header > p:first-child {
+    grid-column: 2 / 3;
+    text-align: center;
+}
+
+.header > p:last-child {
+    grid-column: 3 / 4;
+}
+
+form {
+    background-color: white;
+    width: 20vw;
+    height: 40vh;
+    position: absolute;
+    
+}
+
+.bookContainer {
+    background-color: #b9d0ed;
+    border: solid transparent;
+    border-radius: 20px;
+    height: 40vh;
+    width: 20vw
+}

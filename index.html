@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <p>Library</p>
+        <button class="addBook">Add Book</button>
+    </div>
+    <div class="container">
+        <form>
+            <button>Hi</button>
+        </form>
+    </div>
+
+    <script>
+        const library = [];
+        document.querySelector("form").style.display = "none";
+
+        function Book(id, title, author, pages, read) {
+            this.id = id;
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+            if (read == 'read') {
+                this.read = true;
+            } else {
+                this.read = false;
+            }     
+        }
+
+        function addBook(title, author, pages, read) {
+            let id = crypto.randomUUID()
+            let newBook = new Book(id, title, author, pages, read);
+            library.push(newBook)
+            displayBooks();
+        }
+
+        function displayBooks() {
+            document.querySelector('.container').textContent = '';
+            for (let i = 0; i < library.length; i++) {
+                let container = document.createElement("div");
+                container.classList.add("bookContainer");
+                let title = document.createElement("p");
+                let author = document.createElement("p");
+                let pages = document.createElement("p");
+                let read = document.createElement("input");
+                read.setAttribute("type", "checkbox");
+
+                title.textContent = `Title: ${library[i].title}`;
+                author.textContent = `Author: ${library[i].author}`;
+                pages.textContent = `Pages: ${library[i].pages}`;
+                if (library[i].read == true) {
+                    read.checked = true;
+                } else {
+                    read.checked = false;
+                }
+                container.append(title, author, pages, read);
+                document.querySelector('.container').append(container);
+            }
+        }
+
+        document.querySelector('.addBook').addEventListener('click', function() {
+            document.querySelector("form").style.display = "block";
+        })
+
+    </script>
+</body>
+</html>
