@@ -1,37 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+
 body {
     margin: 0;
-    body: 0;
-    background-color: #915a17;
+    padding : 0;
+    background-color: #4a3e32;
+    font-family: Arial;
     position: relative;
+    height: 100vh;
+    font-family: "Schoolbell";
+    color: #4a3e32;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    font-family: "Schoolbell";
+    color: #4a3e32;
+}
+
+button:hover {
+    scale: 95%;
 }
 
 .header {
     display: grid;
-    grid-template-columns: 5vw 90vw 5vw;
-    background-color: #c4a989;
+    grid-template-columns: 10vw 80vw 10vw;
+    background-color: #ffedf2;
+    height: 10vh;
+    border-bottom: solid #7d4b6a 3px;
 }
 
-.header > p:first-child {
+.header > p {
     grid-column: 2 / 3;
     text-align: center;
+    font-size: 25px;
 }
 
-.header > p:last-child {
+.header > button {
     grid-column: 3 / 4;
+    border: solid #95acc9 1.5px;
+    border-radius: 30px;
+    background-color: #c4ebff;
+    font-size: 18px;
+    width: 8vw;
+    height: 7vh;
+    justify-self: center;
+    align-self: center;
+}
+
+.header > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 form {
-    background-color: white;
+    background-color: #ffedf2;
     width: 20vw;
-    height: 40vh;
+    height: 44vh;
     position: absolute;
-    
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: solid #7d4b6a 2px;
+    border-radius: 20px;
+}
+
+form > * {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="number"] {
+    border: solid transparent;
+    border-radius: 5px;
+    width: 100%;
+    font-family: "Schoolbell";
+}
+
+input[type="text"]:focus-visible, input[type="number"]:focus-visible {
+    outline: solid #7d4b6a 1.5px;
+}
+
+#addButton {
+    margin-left: auto;
+    border: solid #95acc9 1px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background-color: #c4ebff;
+}
+
+.container {
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 .bookContainer {
-    background-color: #b9d0ed;
-    border: solid transparent;
+    background-color: #c4ebff;;
+    border: solid #95acc9 1.5px;
     border-radius: 20px;
-    height: 40vh;
-    width: 20vw
+    height: 34vh;
+    width: calc((100vw - 240px) / 5);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    align-items: start;
+}
+
+.deleteButton {
+    margin-left: auto;
+    border: solid #7d4b6a 1px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    background-color: #ffedf2;
 }

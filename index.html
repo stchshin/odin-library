@@ -10,17 +10,31 @@
     <div class="header">
         <p>Library</p>
         <button class="addBook">Add Book</button>
+        <form>
+            <p>Add a new book</p>
+            <label for="title">
+                Title: <input id="title" type="text">
+            </label>
+            <label for="author">
+                Author: <input id="author" type="text">
+            </label>
+            <label for="pages">
+                Pages: <input id="pages" type="number">
+            </label>
+            <label for="read">
+                Read: <input id="read" type="checkbox">
+            </label>
+            <button id="addButton">Add Book</button>
+        </form>
     </div>
     <div class="container">
-        <form>
-            <button>Hi</button>
-        </form>
     </div>
 
     <script>
         const library = [];
         document.querySelector("form").style.display = "none";
 
+        // Book object
         function Book(id, title, author, pages, read) {
             this.id = id;
             this.title = title;
@@ -33,6 +47,7 @@
             }     
         }
 
+        // Add new book to library array
         function addBook(title, author, pages, read) {
             let id = crypto.randomUUID()
             let newBook = new Book(id, title, author, pages, read);
@@ -40,16 +55,26 @@
             displayBooks();
         }
 
+        // Display books as cards on screen
         function displayBooks() {
             document.querySelector('.container').textContent = '';
             for (let i = 0; i < library.length; i++) {
                 let container = document.createElement("div");
                 container.classList.add("bookContainer");
+                container.setAttribute("data-id", library[i].id);
+
                 let title = document.createElement("p");
                 let author = document.createElement("p");
                 let pages = document.createElement("p");
+
+                let readLabel = document.createElement("label");
+                readLabel.setAttribute("for", library[i].id);
+                readLabel.textContent = "Read: ";
                 let read = document.createElement("input");
                 read.setAttribute("type", "checkbox");
+                read.setAttribute("id", library[i].id);
+                let deleteButton = document.createElement("button");
+                deleteButton.classList.add("deleteButton");
 
                 title.textContent = `Title: ${library[i].title}`;
                 author.textContent = `Author: ${library[i].author}`;
@@ -59,15 +84,69 @@
                 } else {
                     read.checked = false;
                 }
-                container.append(title, author, pages, read);
+                deleteButton.textContent = "Delete Book";
+
+                readLabel.append(read);
+                container.append(title, author, pages, readLabel, deleteButton);
                 document.querySelector('.container').append(container);
             }
+
+            // Change book's read status
+            document.querySelectorAll(".bookContainer").forEach(book => {
+                book.querySelector('input[type="checkbox"]').addEventListener('change', function() {
+                    let index = library.findIndex(element => element.id == book.getAttribute("data-id"));
+                    if (book.querySelector('input[type="checkbox"]').checked) {
+                        // Unread to read
+                        library[index].read = true;
+                    } else {
+                        // Read to unread
+                        library[index].read = false;
+                    }
+                })
+            })
+
+            // Remove book
+            document.querySelectorAll(".bookContainer").forEach(book => {
+                book.querySelector('.deleteButton').addEventListener('click', function() {
+                    let index = library.findIndex(element => element.id == book.getAttribute("data-id"));
+                    library.splice(index, 1);
+                    displayBooks();
+                })
+            })
         }
 
+        // Get form for adding books
         document.querySelector('.addBook').addEventListener('click', function() {
-            document.querySelector("form").style.display = "block";
+            let form = document.querySelector("form");
+            form.style.display = "block";
+            form.querySelectorAll('input').forEach(input => input.value = '');
+            form.querySelector('#read').checked = false;
         })
 
+        // Add book through form results
+        document.querySelector('#addButton').addEventListener('click', function(event) {
+            let form = document.querySelector("form");
+            event.preventDefault();
+
+            let title = form.querySelector('#title').value;
+            let author = form.querySelector('#author').value;
+            let pages = form.querySelector('#pages').value;
+
+            if (title == '' || author == '' || pages == '') {
+                alert("Please fill out the form!");
+            }
+            else {
+                let read;
+            
+                if (form.querySelector('#read').checked) {
+                    read = 'read';
+                } else {
+                    read = 'unread';
+                }
+                addBook(title, author, pages, read);
+                form.style.display = "none";
+            }
+        })
     </script>
 </body>
 </html>
