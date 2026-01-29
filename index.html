@@ -35,16 +35,18 @@
         document.querySelector("form").style.display = "none";
 
         // Book object
-        function Book(id, title, author, pages, read) {
-            this.id = id;
-            this.title = title;
-            this.author = author;
-            this.pages = pages;
-            if (read == 'read') {
-                this.read = true;
-            } else {
-                this.read = false;
-            }     
+        class Book {
+            constructor(id, title, author, pages, read) {
+                this.id = id;
+                this.title = title;
+                this.author = author;
+                this.pages = pages;
+                if (read == 'read') {
+                    this.read = true;
+                } else {
+                    this.read = false;
+                }
+            }
         }
 
         // Add new book to library array
