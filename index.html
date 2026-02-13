@@ -13,13 +13,13 @@
         <form>
             <p>Add a new book</p>
             <label for="title">
-                Title: <input id="title" type="text">
+                Title: <input id="title" type="text" required>
             </label>
             <label for="author">
-                Author: <input id="author" type="text">
+                Author: <input id="author" type="text" required>
             </label>
             <label for="pages">
-                Pages: <input id="pages" type="number">
+                Pages: <input id="pages" type="number" required>
             </label>
             <label for="read">
                 Read: <input id="read" type="checkbox">
@@ -127,17 +127,38 @@
 
         // Add book through form results
         document.querySelector('#addButton').addEventListener('click', function(event) {
-            let form = document.querySelector("form");
             event.preventDefault();
 
-            let title = form.querySelector('#title').value;
-            let author = form.querySelector('#author').value;
-            let pages = form.querySelector('#pages').value;
-
-            if (title == '' || author == '' || pages == '') {
-                alert("Please fill out the form!");
+            let form = document.querySelector("form");
+            
+            // Custom validity
+            if (form.querySelector('#title').validity.valueMissing) {
+                form.querySelector('#author').setCustomValidity("");
+                form.querySelector('#pages').setCustomValidity("");
+                form.querySelector('#title').setCustomValidity("The title must be filled!");
+                form.reportValidity();
             }
-            else {
+            if (form.querySelector('#author').validity.valueMissing) {
+                form.querySelector('#title').setCustomValidity("");
+                form.querySelector('#pages').setCustomValidity("");
+                form.querySelector('#author').setCustomValidity("The author must be filled!");
+                form.reportValidity();
+            }
+            if (form.querySelector('#pages').validity.valueMissing) {
+                form.querySelector('#title').setCustomValidity("");
+                form.querySelector('#author').setCustomValidity("");
+                form.querySelector('#pages').setCustomValidity("The page numbers must be filled!");
+                form.reportValidity();
+            }
+            if (form.querySelector('#title').validity.valid && form.querySelector('#author').validity.valid && form.querySelector('#pages').validity.valid) {
+                form.querySelector('#title').setCustomValidity("");
+                form.querySelector('#author').setCustomValidity("");
+                form.querySelector('#pages').setCustomValidity("");
+                
+                let title = form.querySelector('#title').value;
+                let author = form.querySelector('#author').value;
+                let pages = form.querySelector('#pages').value;
+
                 let read;
             
                 if (form.querySelector('#read').checked) {
@@ -148,6 +169,7 @@
                 addBook(title, author, pages, read);
                 form.style.display = "none";
             }
+            form.reportValidity();
         })
     </script>
 </body>

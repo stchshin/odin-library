@@ -34,6 +34,7 @@ button:hover {
     background-color: #ffedf2;
     height: 10vh;
     border-bottom: solid #7d4b6a 3px;
+    width: 100%;
 }
 
 .header > p {
