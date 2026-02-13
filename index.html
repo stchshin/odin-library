@@ -117,6 +117,15 @@
             })
         }
 
+        // Function for validation
+        function validation(id) {
+            if (document.querySelector(`#${id}`).validity.valueMissing) {
+                document.querySelector(`#${id}`).setCustomValidity(`The ${id} must be filled!`);
+            } else {
+                document.querySelector(`#${id}`).setCustomValidity("");
+            }
+        }
+
         // Get form for adding books
         document.querySelector('.addBook').addEventListener('click', function() {
             let form = document.querySelector("form");
@@ -125,31 +134,18 @@
             form.querySelector('#read').checked = false;
         })
 
-        // Add book through form results
+        
+
+        // Add book through form result
         document.querySelector('#addButton').addEventListener('click', function(event) {
             event.preventDefault();
+            // Validate fields        
+            document.querySelector('#title').addEventListener("input", validation("title"));
+            document.querySelector('#author').addEventListener("input", validation("author"));
+            document.querySelector('#pages').addEventListener("input", validation("pages"));
 
             let form = document.querySelector("form");
-            
-            // Custom validity
-            if (form.querySelector('#title').validity.valueMissing) {
-                form.querySelector('#author').setCustomValidity("");
-                form.querySelector('#pages').setCustomValidity("");
-                form.querySelector('#title').setCustomValidity("The title must be filled!");
-                form.reportValidity();
-            }
-            if (form.querySelector('#author').validity.valueMissing) {
-                form.querySelector('#title').setCustomValidity("");
-                form.querySelector('#pages').setCustomValidity("");
-                form.querySelector('#author').setCustomValidity("The author must be filled!");
-                form.reportValidity();
-            }
-            if (form.querySelector('#pages').validity.valueMissing) {
-                form.querySelector('#title').setCustomValidity("");
-                form.querySelector('#author').setCustomValidity("");
-                form.querySelector('#pages').setCustomValidity("The page numbers must be filled!");
-                form.reportValidity();
-            }
+
             if (form.querySelector('#title').validity.valid && form.querySelector('#author').validity.valid && form.querySelector('#pages').validity.valid) {
                 form.querySelector('#title').setCustomValidity("");
                 form.querySelector('#author').setCustomValidity("");
